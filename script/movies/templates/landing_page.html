@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'master.html' %}
+
+{% block content %}
+    <p>Please login to continue</p>
+    <a href="{% url 'login' %}">Click here to login</a>
+{% endblock %}

@@ -15,11 +15,13 @@
     </div>
   <div class="card-body">
     <p class="card-text">
-
+        {{ movie.description }}
     </p>
-    <a href="#" class="btn btn-primary">
-        Go somewhere
-    </a>
+      {% if not movie.rented %}
+        <a href="" class="btn btn-primary">
+            Rent this movie
+        </a>
+      {% endif %}
   </div>
 </div>
 

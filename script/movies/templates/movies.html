@@ -1,15 +1,43 @@
 {% extends 'master.html' %}
 
 {% block title %}
-    All Movies We Offer
+All Movies We Offer
 {% endblock %}
 
 {% block content %}
-    <div class="list-group">
-        {% for movie in movies %}
-             <a class="list-group-item list-group-item-action" href="{% url 'movies:movie' movie.id %}">
+<div class="list-group">
+    {% if movies|length %}
+    {% for movie in movies %}
+    <div class="card mb-5">
+        <div class="card-header">
+            <h1>
                 {{ movie.title }}
-            </a>
-        {% endfor %}
+                {% if perms.movies.change_movie %}
+                <a href="{% url 'movies:edit' movie.id%}">
+                    <span class="badge badge-primary">Edit</span>
+                </a>
+                {% endif %}
+            </h1>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {{ movie.description }}
+            </p>
+            {% if not movie.rented %}
+                <form method="post" action="{% url 'movies:rent' movie.id %}">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-primary btn-lg" value="Rent this movie"/>
+                </form>
+            {% else %}
+                <h2>
+                    <div class="badge badge-secondary">This movie is currently rented</div>
+                </h2>
+            {% endif %}
+        </div>
     </div>
+    {% endfor %}
+    {% else %}
+        No movies yet
+    {% endif %}
+</div>
 {% endblock %}
